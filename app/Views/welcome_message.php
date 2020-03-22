@@ -16,7 +16,6 @@
           <div class="col-md-6">
             <div class="card mb-3">
               <div class="row no-gutters border rounded overflow-hidden flex-md-row">
-                <div class="row no-gutters border rounded overflow-hidden flex-md-row">
                   <div class="card-body">
                     <?php $temp_array = $blog_cat[$value['blog_id']]; ?>
                     <?php foreach ($temp_array as $key => $catg) : ?>
@@ -25,11 +24,10 @@
                     <?php endforeach; ?>
                     <h2 class="card-title mb-0"><?= $value['blog_title'] ?></h2>
                     <p class="card-text mb-1"><small class="text-muted"><? $value['blog_created_time'] ?></small></p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="card-text"><?= word_limiter($value['blog_body'], 10)?></div>
                     <a href="/posts/<?= $value['blog_id'] ?>" class="stretched-link">Continue reading</a>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         <?php endforeach; ?>

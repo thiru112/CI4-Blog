@@ -87,4 +87,22 @@ class PostModel extends Model
         $db->close();
         return $blog_id_cat;
     }
+
+    public function verfiyPostUser($blog_id, $user_rand_id)
+    {
+      $db = db_connect()  ;
+      $builder = $db->table('blog');
+      $query = $builder->select(['blog_id'])->where(['user_rand_id' => $user_rand_id, 'blog_id' => $blog_id])->get();
+      return $db->affectedRows();
+    }
+
+    public function deletePost($blog_id)
+    {
+      $db = db_connect();
+      $builder = $db->table('blog');
+      $query = $builder->delete(['blog_id' => $blog_id]);
+      $builders = $db->table('cat_blog');
+      $query = $builders->delete(['blog_id' => $blog_id]);
+      return $db->affectedRows();
+    }
 }

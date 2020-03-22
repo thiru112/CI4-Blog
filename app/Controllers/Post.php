@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Controllers\Useraction;
 use App\Models\PostModel;
 use App\Models\UserModel;
 use CodeIgniter\I18n\Time;
@@ -56,5 +57,41 @@ class Post extends BaseController
                 return redirect()->route('users/profile')->with('posted', "Posted Sucessfully");
             }
         }
+    }
+
+    public function delete($blog_id)
+    {
+      $sess = session();
+      $sess->start();
+      $jwt_token = Useraction::session_check();
+      $user_rand_id = $jwt_token['id'];
+      if(is_null($blog_id) || empty($blog_id))
+      {
+        return redirect()->to(base_url());
+        die;
+      }
+      else
+      {
+        $post_model = new PostModel();
+        $deleted = $post_model->verfiyPostUser($blog_id, $user_rand_id);
+        if($deleted == null || $deleted == 0)
+        {
+          $sess->destroy();
+          return redirect()->to(base_url());
+        }
+        else
+        {
+          $post_model = new PostModel();
+          $affected_rows = $post_model->deletePost($blog_id);
+          if($affected_rows)
+          {
+            return redirect()->route('users/profile')->with('post_deleted','Deleted Successfully');
+          }
+          else
+          {
+            return redirect()->route('users/profile')->with('error','Error Occurred');
+          }
+        }
+      }
     }
 }

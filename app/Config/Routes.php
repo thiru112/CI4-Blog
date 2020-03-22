@@ -86,6 +86,7 @@ $routes->post('users/pass_change','Useraction::pass_change');
 $routes->get('users/categories','Useraction::categories');
 $routes->post('users/cat_create','Useraction::cat_create');
 $routes->post('post/create','Post::create');
+$routes->add('post/delete/(:alphanum)','Post::delete/$1');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="stats" class="tab-pane" role="tabpanel">
+                <div class="tab-pane" id="stats" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="settings" class="tab-pane active" role="tabpanel">
+                <div class="tab-pane active" id="settings" role="tabpanel">
                     <?php
                     $blogs = $posts;
                     $blog_category = $categories;
@@ -135,7 +135,7 @@
                                             <p class="card-text mb-1"><small class="text-muted"><?= $blog_key['blog_created_time'] ?></small></p>
                                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                             <a href="/post/edit" class="btn btn-primary">EDIT</a>
-                                            <button id="post_delete" class="btn btn-danger">DELETE</a>
+                                            <a href="/post/delete/<?= $blog_key['blog_id'] ?>" class="btn btn-danger">DELETE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -274,6 +274,22 @@ if ($sess->has('posted')) {
         icon: "success",
         title:"Saved",
         text: "Posted Sucessfully",
+    });</script>';
+}
+
+if ($sess->has('error')) {
+    echo '<script>Swal.fire({
+        icon: "error",
+        title:"Error",
+        text: "Error Occured",
+    });</script>';
+}
+
+if ($sess->has('post_deleted')) {
+    echo '<script>Swal.fire({
+        icon: "success",
+        title:"Success",
+        text: "Deleted Sucessfully",
     });</script>';
 }
 ?>
