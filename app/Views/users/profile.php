@@ -104,21 +104,42 @@
                     </div>
                 </div>
                 <div id="settings" class="tab-pane active" role="tabpanel">
+                    <?php
+                    $blogs = $posts;
+                    $blog_category = $categories;
+                    $badge_class = ["badge-primary", "badge-secondary", "badge-success", "badge-danger", "badge-warning", "badge-info", "badge-dark"];
+                    ?>
                     <div class="card">
                         <div class="card-body">
-                            <div class="card mb-3">
-                                <div class="row no-gutters border rounded overflow-hidden flex-md-row">
-                                    <div class="card-body">
-                                        <strong class="d-inline-block mb-2 badge badge-primary">World</strong>
-                                        <strong class="d-inline-block mb-2 badge badge-success">World</strong>
-                                        <h2 class="card-title mb-0">Card title</h2>
-                                        <p class="card-text mb-1"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <a href="/post/edit" class="btn btn-primary">EDIT</a>
-                                        <button id="post_delete" class="btn btn-danger">DELETE</a>
+                            <?php if (empty($blogs)) : ?>
+                                <div class="card mb-3">
+                                    <div class="row no-gutters border rounded overflow-hidden flex-md-row">
+                                        <div class="card-body">
+                                            <h2 class="card-title mb-2">It seems you didn't write a blog</h2>
+                                            <p class="card-text">Write a blog by clicking down the button</p>
+                                            <a href="<?=base_url()?>/users/post" class="btn btn-success">WRITE A BLOG</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
+                            <?php foreach ($blogs as $key => $blog_key) : ?>
+                                <div class="card mb-3">
+                                    <div class="row no-gutters border rounded overflow-hidden flex-md-row">
+                                        <div class="card-body">
+                                            <?php $temp_array = $blog_category[$blog_key['blog_id']]; ?>
+                                            <?php foreach ($temp_array as $key => $category) : ?>
+                                                <?php $single_badge = array_rand($badge_class, 1); ?>
+                                                <a href="/category/<?= $category ?>" class="d-inline-block mb-2 badge <?= $badge_class[$single_badge] ?>"><?= $category ?></a>
+                                            <?php endforeach; ?>
+                                            <h2 class="card-title mb-0"><?= $blog_key['blog_title'] ?></h2>
+                                            <p class="card-text mb-1"><small class="text-muted"><?= $blog_key['blog_created_time'] ?></small></p>
+                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <a href="/post/edit" class="btn btn-primary">EDIT</a>
+                                            <button id="post_delete" class="btn btn-danger">DELETE</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>

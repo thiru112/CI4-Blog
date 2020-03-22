@@ -51,7 +51,6 @@ class Post extends BaseController
                     "blog_created_time" => $time["date"],
                     "post_category" => $san_post_data["post_category"]
                 );
-                die;
                 $post_model = new PostModel();
                 $post_model->insertPost($post_data);
                 return redirect()->route('users/profile')->with('posted', "Posted Sucessfully");

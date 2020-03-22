@@ -53,25 +53,25 @@ class PostModel extends Model
         $blog_ids = array();
         if ($user_rand_id === 'default') {
             $query = $builder->select(['blog_id', 'blog_title', 'blog_body', 'blog_created_time'])->get();
-            $blogs = $query->getResultArray();
-            if (is_null($blogs)) {
-                return null;
-            } else {
-                foreach ($blogs as $key => $value) {
-                    array_push($blog_ids, $blogs[$key]['blog_id']);
-                }
-                $categories = PostModel::returnCategories($blog_ids);
-                $cat_id_name = array();
-                foreach ($categories as $key => $values) {
-                    $blog_id_cat = $key;
-                    foreach ($values as $key => $value) {
-                        $cat_id_name[$blog_id_cat][] = $value['cat_name'];
-                    }
-                }
-                return array($cat_id_name, $blogs);
-            }
         } else {
-            
+            $query = $builder->select(['blog_id', 'blog_title', 'blog_body', 'blog_created_time'])->where(['user_rand_id' => $user_rand_id])->get();
+        }
+        $blogs = $query->getResultArray();
+        if (is_null($blogs)) {
+            return null;
+        } else {
+            foreach ($blogs as $key => $value) {
+                array_push($blog_ids, $blogs[$key]['blog_id']);
+            }
+            $categories = PostModel::returnCategories($blog_ids);
+            $cat_id_name = array();
+            foreach ($categories as $key => $values) {
+                $blog_id_cat = $key;
+                foreach ($values as $key => $value) {
+                    $cat_id_name[$blog_id_cat][] = $value['cat_name'];
+                }
+            }
+            return array($cat_id_name, $blogs);
         }
     }
 

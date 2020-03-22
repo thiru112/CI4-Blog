@@ -51,9 +51,11 @@ class Useraction extends BaseController
             $u_id = $sign_verify['id'];
             if ($expiration >= time() and $not_before <= time()) {
                 $post_model = new PostModel();
-                // $post_model->getPostCurrentUser($u_id);
+                list($categories, $posts) = $post_model->getAllPost($u_id);
+                $data['posts'] = $posts;
+                $data['categories'] = $categories;
                 echo view('templates/header');
-                echo view('users/profile');
+                echo view('users/profile', $data);
                 echo view('templates/footer');
             } else {
                 $u_sess->destroy();
@@ -175,10 +177,10 @@ class Useraction extends BaseController
                     'cat_name'  => $san_cat_data['category_name'],
                     'cat_created_by'    => $san_cat_id
                 );
-                if ($valid->run($un_san_data,'categoryvalid') === FALSE) {
+                if ($valid->run($un_san_data, 'categoryvalid') === FALSE) {
                     $error = $valid->getErrors();
                     $error['msg'] = 'error';
-                    return $this->response->setHeader(csrf_header(),csrf_hash())->setBody(json_encode($error));
+                    return $this->response->setHeader(csrf_header(), csrf_hash())->setBody(json_encode($error));
                 } else {
                     $aff_rows = $user_model->setCategory($cat_data);
                     if ($aff_rows != 0) {
