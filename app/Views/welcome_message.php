@@ -23,8 +23,8 @@
                       <a href="/category/<?= $catg ?>" class="d-inline-block mb-2 badge <?=$badge_class[$single_badge]?>"><?= $catg ?></a>
                     <?php endforeach; ?>
                     <h2 class="card-title mb-0"><?= $value['blog_title'] ?></h2>
-                    <p class="card-text mb-1"><small class="text-muted"><? $value['blog_created_time'] ?></small></p>
-                    <div class="card-text"><?= word_limiter($value['blog_body'], 10)?></div>
+                    <p class="card-text mb-1"><small class="text-muted"><?=$value['blog_created_time'] ?></small></p>
+                    <p class="card-text"><?= strip_tags(htmlspecialchars_decode(word_limiter($value['blog_body'], 19)), ENT_HTML5)?></p>
                     <a href="/posts/<?= $value['blog_id'] ?>" class="stretched-link">Continue reading</a>
                   </div>
                 </div>

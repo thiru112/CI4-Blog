@@ -94,4 +94,31 @@ class Post extends BaseController
         }
       }
     }
+
+    public function display($blog_id = 'default')
+    {
+      $sess = session();
+      $sess->start();
+      if(empty($blog_id) || is_null($blog_id) || $blog_id == 'default')
+      {
+        return redirect()->route('');
+      }
+      else
+      {
+        $post_model = new PostModel();
+        list($blog, $category) = $post_model->getBlog($blog_id);
+        if(is_null($blog) || is_null($category))
+        {
+          throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        else
+        {
+          $data['blog'] = $blog;
+          $data['category'] = $category;
+          echo view('templates/header');
+          echo view('posts/post', $data);
+          echo view('templates/footer');
+        }
+      }
+    }
 }

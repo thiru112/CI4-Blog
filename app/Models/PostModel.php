@@ -90,19 +90,35 @@ class PostModel extends Model
 
     public function verfiyPostUser($blog_id, $user_rand_id)
     {
-      $db = db_connect()  ;
-      $builder = $db->table('blog');
-      $query = $builder->select(['blog_id'])->where(['user_rand_id' => $user_rand_id, 'blog_id' => $blog_id])->get();
-      return $db->affectedRows();
+        $db = db_connect();
+        $builder = $db->table('blog');
+        $query = $builder->select(['blog_id'])->where(['user_rand_id' => $user_rand_id, 'blog_id' => $blog_id])->get();
+        return $db->affectedRows();
     }
 
     public function deletePost($blog_id)
     {
-      $db = db_connect();
-      $builder = $db->table('blog');
-      $query = $builder->delete(['blog_id' => $blog_id]);
-      $builders = $db->table('cat_blog');
-      $query = $builders->delete(['blog_id' => $blog_id]);
-      return $db->affectedRows();
+        $db = db_connect();
+        $builder = $db->table('blog');
+        $query = $builder->delete(['blog_id' => $blog_id]);
+        $builders = $db->table('cat_blog');
+        $query = $builders->delete(['blog_id' => $blog_id]);
+        return $db->affectedRows();
+    }
+
+    public function getBlog($blog_id)
+    {
+        $db = db_connect();
+        $builder = $db->table('blog');
+        $query = $builder->select(['blog_id', 'blog_title', 'blog_body', 'blog_created_time'])->where(["blog_id" => $blog_id])->get();
+        $result = $builder->countAllResults();
+        if ($result === 0) {
+            return null;
+        } else {
+            $blog = $query->getResultArray();
+            $category = PostModel::returnCategories(["$blog_id"]);
+
+            return array($blog, $category);
+        }
     }
 }

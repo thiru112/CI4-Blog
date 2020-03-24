@@ -133,7 +133,7 @@
                                             <?php endforeach; ?>
                                             <h2 class="card-title mb-0"><?= $blog_key['blog_title'] ?></h2>
                                             <p class="card-text mb-1"><small class="text-muted"><?= $blog_key['blog_created_time'] ?></small></p>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text"><?= strip_tags(htmlspecialchars_decode(word_limiter($blog_key['blog_body'], 19)), ENT_HTML5)?></p>
                                             <a href="/post/edit" class="btn btn-primary">EDIT</a>
                                             <a href="/post/delete/<?= $blog_key['blog_id'] ?>" class="btn btn-danger">DELETE</a>
                                         </div>
