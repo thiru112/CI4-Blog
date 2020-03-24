@@ -14,7 +14,7 @@
 # ENVIRONMENT
 #--------------------------------------------------------------------
 
-# CI_ENVIRONMENT = production
+ CI_ENVIRONMENT = development
 
 #--------------------------------------------------------------------
 # APP
@@ -36,12 +36,12 @@
 # app.cookieSecure = false
 # app.cookieHTTPOnly = false
 
-# app.CSRFProtection  = false
-# app.CSRFTokenName   = 'csrf_test_name'
-# app.CSRFCookieName  = 'csrf_cookie_name'
-# app.CSRFExpire      = 7200
-# app.CSRFRegenerate  = true
-# app.CSRFExcludeURIs = []
+app.CSRFProtection  = true
+app.CSRFTokenName   = 'csrf_test_name'
+app.CSRFCookieName  = 'csrf_cookie_name'
+app.CSRFExpire      = 7200
+app.CSRFRegenerate  = true
+app.CSRFExcludeURIs = []
 
 # app.CSPEnabled = false
 
