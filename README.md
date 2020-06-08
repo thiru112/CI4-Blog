@@ -15,7 +15,7 @@ including the user guide. It has been built from the
 ## Dependencies
 
 - php/jwt for JSON Web Tokens
-- chosen
+- Jquery chosen
 
 **Do a composer install to install depedencies**
 
